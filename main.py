@@ -12,7 +12,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
 # selenium 4
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.service import Service #as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 def collect_images():
@@ -36,13 +36,15 @@ def collect_images():
 
     #Selenium4に対応する
     #service = ChromeService(executable_path=ChromeDriverManager().install())
-    service = ChromeDriverManager()
+    service = Service(executable_path="./chromedriver.exe")
+    #service = ChromeDriverManager(name="chromedriver.exe")
 
     # 指定したURLに移動
     url = f'https://www.google.com/search?q={QUERY}&tbm=isch'
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
-    driver.get('https://google.com')
-    
+    #driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
+    driver = webdriver.Chrome(service=service,options=options)
+    #driver.get('https://google.com')
+
     # タイムアウト設定
     driver.implicitly_wait(TIMEOUT)
 
