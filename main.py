@@ -7,13 +7,13 @@ import string
 import sys
 import time
 
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
-
+# selenium 4
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 def collect_images():
     QUERY = "自家製麺 TERRA"
@@ -35,12 +35,14 @@ def collect_images():
     options.add_argument('--start-maximized')  # 起動時にウィンドウを最大化する
 
     #Selenium4に対応する
-    service = ChromeService(executable_path=ChromeDriverManager().install())
+    #service = ChromeService(executable_path=ChromeDriverManager().install())
+    service = ChromeDriverManager()
 
     # 指定したURLに移動
     url = f'https://www.google.com/search?q={QUERY}&tbm=isch'
-    driver = webdriver.Chrome(service=service, options=options)
-
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
+    driver.get('https://google.com')
+    
     # タイムアウト設定
     driver.implicitly_wait(TIMEOUT)
 
